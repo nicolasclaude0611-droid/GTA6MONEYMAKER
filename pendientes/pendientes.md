@@ -6,7 +6,6 @@
 - [ ] ¿Ya existen las cuentas de TikTok, Instagram y Facebook?
 - [ ] ¿Cuántos videos por semana?
 - [ ] ¿Cuántas copias se regalan y cada cuánto?
-- [ ] Aprobar que se cree la rama `main` con los archivos de la oficina
 
 ## Trabajo
 - [ ] Reglas del sorteo en inglés (Página y Sorteos)
