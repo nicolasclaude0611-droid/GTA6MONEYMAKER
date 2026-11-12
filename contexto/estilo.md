@@ -7,4 +7,4 @@
 **Tono de los textos (inglés):** directo, emocionante y corto. Sin promesas falsas. Ejemplos:
 - "Spinning to see who gets a free GTA VI copy this week 👀"
 - "I'm giving away GTA VI copies to my visitors 🎁 Link in bio"
-**Prohibido:** logos, portadas, personajes o capturas oficiales de Rockstar/GTA.
+**Marcas reales:** permitidas para la tarea de la universidad (ver `CLAUDE.md`, "Marca y derechos").

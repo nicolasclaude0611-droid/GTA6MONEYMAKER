@@ -4,7 +4,7 @@ Todos los agentes leen este archivo al empezar. Después leen su archivo en `age
 
 ## El proyecto
 Llevar tráfico desde TikTok, Instagram y Facebook a la página de Nicolas, que tiene artículos sobre GTA 6 y gana por anuncios
-y por el tiempo que la gente pasa en ella. El gancho principal es un **sorteo real** de copias de GTA VI: la gente deja su
+y por el tiempo que la gente pasa en ella. Es una **tarea de marketing de la universidad**. El gancho principal es un **sorteo real** de copias de GTA VI: la gente deja su
 usuario de PS5 o Xbox en la página, y Nicolas graba videos girando dos ruletas (una elige al participante, la otra el premio).
 Más datos en `contexto/proyecto.md`.
 
@@ -39,8 +39,11 @@ red de anuncios, contraseñas ni conversaciones privadas. Eso se trabaja solo de
 - Cada video lleva la nota: "Giveaway rules at the link · Not affiliated with Rockstar Games".
 
 ## Marca y derechos
-- No usamos logos, portadas, personajes, capturas ni arte oficial de Rockstar o de GTA. Sí usamos un estilo parecido
-  (atardecer de Miami, neón, palmeras), hecho por nosotros o por Nicolas. Ver `contexto/estilo.md`.
+- Este proyecto es una **tarea de marketing de la universidad**. Por eso se pueden usar marcas reales (logo y portada de
+  GTA VI, PlayStation, Xbox) con fines académicos. Estilo en `contexto/estilo.md`.
+- Siempre va la nota "Not affiliated with Rockstar Games". Nunca se da a entender que el sorteo es de Rockstar.
+- Si algo se va a **publicar en redes reales** (no solo para la clase), avisar a Nicolas que el arte oficial puede traer
+  reclamos o bajadas del video y ofrecer desenfocarlo.
 - Cuando Nicolas mande una referencia (video o post de otros), se adapta la idea a nuestro estilo sin copiar contenido ajeno.
 
 ## Ramas y entregas
