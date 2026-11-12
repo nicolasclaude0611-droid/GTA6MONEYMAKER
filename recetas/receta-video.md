@@ -7,11 +7,10 @@ permiso de Nicolas.
 **Resultado:** MP4 vertical 1080×1920, 30 fps, H.264 + AAC. Dura lo que dure el video de Nicolas más 14 s de
 plantilla. Ejemplo: 8,8 + 14 = 22,8 s. Lo ideal según Nicolas es grabar unos 15 s para llegar a 28–30 s.
 
-> **Estado en esta oficina (lo agregó Franklin):** los archivos base de la sección 0 (`generar.py`, `assets/`,
-> `sonido_ruleta.py` y el proyecto de ejemplo) **todavía no existen en este repositorio**. La primera vez, el Editor los
-> arma en `proyectos/editor/` siguiendo esta receta y los muestra a Nicolas para aprobarlos. Los datos del canal de
-> Nicolas (nombre, @usuario, link de la bio, banner y foto) están **POR DEFINIR**.
-> La ruleta que se graba es `herramientas/ruleta.html` (la mantiene Herramientas y Diseño).
+> **Estado en esta oficina (lo agregó Franklin):** los archivos base ya están en `proyectos/editor/` (copiados de la
+> oficina de origen el 12-11-2026). Se cambiaron el nombre, @usuario, link, banner y foto del canal original por datos de
+> ejemplo ("Channel Name", "@channelname", "your-link.com" e imágenes neutras). Hay que reemplazarlos por los datos reales
+> del canal de Nicolas (**POR DEFINIR**) antes del primer render. La ruleta que se graba es `herramientas/ruleta.html`.
 
 ---
 
