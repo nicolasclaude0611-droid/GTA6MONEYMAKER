@@ -1,10 +1,10 @@
-# Receta: video de la ruleta + plantilla "5 pasos"
+# Receta: video de la ruleta + plantilla "6 pasos"
 
 Receta exacta para que cualquier agente haga los videos **iguales** al aprobado por Nicolas
 (versión 3 de la receta original). Sigue los pasos en orden y no cambies valores sin
 permiso de Nicolas.
 
-**Resultado:** MP4 vertical 1080×1920, 30 fps, H.264 + AAC. Dura lo que dure el video de Nicolas más 14 s de
+**Resultado:** MP4 vertical 1080×1920, 30 fps, H.264 + AAC. Dura lo que dure el video de Nicolas más 16,4 s de
 plantilla. Ejemplo: 8,8 + 14 = 22,8 s. Lo ideal según Nicolas es grabar unos 15 s para llegar a 28–30 s.
 
 > **Estado en esta oficina (lo agregó Franklin):** los archivos base ya están en `proyectos/editor/` (copiados de la
@@ -24,7 +24,7 @@ plantilla. Ejemplo: 8,8 + 14 = 22,8 s. Lo ideal según Nicolas es grabar unos 15
      ```
    - Antes de tocar composiciones, carga la skill `hyperframes`.
 3. Archivos base, que **no se modifican** salvo que Nicolas pida cambiar la plantilla:
-   - `proyectos/editor/pasos-cta/generar.py`: genera la plantilla de 5 pasos y la raíz del video.
+   - `proyectos/editor/pasos-cta/generar.py`: genera la plantilla de 6 pasos y la raíz del video.
    - `proyectos/editor/pasos-cta/assets/`: banner, avatar y efectos de sonido (licencia Pixabay, ver `sfx/CREDITS.md`).
    - `proyectos/editor/herramientas/sonido_ruleta.py`: sonido de la ruleta sincronizado.
    - `proyectos/editor/2026-11-12-ruleta/`: proyecto de ejemplo completo. Cópialo como punto de partida.
@@ -132,9 +132,9 @@ Diseño fijo del intro:
 
 ```bash
 cd proyectos/editor/$NUEVO
-python3 -I ../pasos-cta/generar.py . intro.json   # crea index.html y las escenas s1..s5 a continuación del video
+python3 -I ../pasos-cta/generar.py . intro.json   # crea index.html y las escenas s1..s6 a continuación del video
 $HF check --json          # debe dar "ok": true (el aviso line_unread de #s3-typed es normal)
-$HF snapshot --at 0,3,T_RESULTADO+0.1,DURACION+1,DURACION+12 --json
+$HF snapshot --at 0,3,T_RESULTADO+0.1,DURACION+1,DURACION+12,DURACION+15 --json
 ```
 Mira las imágenes antes de renderizar: el gancho tiene que verse en el cuadro 0, el destello y "GTA VI!" en el
 resultado, y la plantilla legible sobre el fondo.
@@ -152,9 +152,9 @@ ffmpeg -y -i /tmp/.../render.mp4 -c:v copy -af loudnorm=I=-14:TP=-1.5:LRA=11 -c:
 
 ---
 
-## La plantilla "5 pasos" (no se toca)
+## La plantilla "6 pasos" (no se toca)
 
-Dura 14 s y la genera `generar.py`. Ya está aprobada por Nicolas (v3):
+Dura 16,4 s y la genera `generar.py`. Aprobada por Nicolas (v4, 12-11-2026: el paso 5 se dividió en dos):
 
 | Paso | Dura | Qué pasa |
 |---|---|---|
@@ -162,11 +162,12 @@ Dura 14 s y la genera `generar.py`. Ya está aprobada por Nicolas (v3):
 | 2 · SUBSCRIBE | 2,2 s | "SUBSCRIBE" pasa a "SUBSCRIBED ✓" y luego se toca la campanita, que se mueve y se pone dorada |
 | 3 · DROP A COMMENT | 3,0 s | Se escribe "This channel is fire 💎", se envía y aparece publicado |
 | 4 · SHARE IT | 2,2 s | Se abre el menú de compartir y se toca "Copy link" |
-| 5 · VISIT THE CHANNEL | 4,6 s | Captura tipo YouTube en modo oscuro (banner, foto, nombre del canal, @usuario y link de la bio de Nicolas: **POR DEFINIR**). Se toca **Subscribe** → "🔔 Subscribed" y luego **el link de la bio**, que abre una página con barra de carga |
+| 5 · VISIT THE CHANNEL | 2,4 s | Captura tipo YouTube en modo oscuro (banner, foto, nombre del canal, @usuario y link de la bio de Nicolas: **POR DEFINIR**). Se toca **Subscribe** → "🔔 Subscribed" |
+| 6 · CLICK THE LINK IN BIO | 4,6 s | Se toca el link de la bio, se abre una ventana con barra de carga y aparece una captura de `herramientas/ruleta.html` |
 
 - Números: Montserrat 900 cursiva, relleno cromado y sombra rosa desplazada. Entran girando en 3D con rebote, un aro
   dorado, dos contornos (azul y rosa) y un brillo que los cruza.
-- Arriba siempre: "Giveaway rules at the link · Not affiliated with Rockstar Games" y la barra de 5 segmentos.
+- Arriba siempre: "Giveaway rules at the link · Not affiliated with Rockstar Games" y la barra de 6 segmentos.
 - Títulos con sombra para que se lean sobre el fondo claro.
 
 ## Reglas que no se rompen
