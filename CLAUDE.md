@@ -37,6 +37,9 @@ red de anuncios, contraseñas ni conversaciones privadas. Eso se trabaja solo de
   cualquiera gana en el primer giro.
 - Los textos de los videos no dicen que el espectador ya ganó. Dicen que hay un sorteo y que las reglas están en el link.
 - Cada video lleva la nota: "Giveaway rules at the link · Not affiliated with Rockstar Games".
+- **Excepción para la clase:** la ruleta oficial (`herramientas/ruleta.html`) usa los textos "Unlock more attempts" y
+  "CLAIM" porque los videos son **solo para mostrar en clase y para práctica de compañeros, no se publican**.
+  Si algún día algo se va a publicar en redes reales, esos textos se cambian antes y se avisa a Nicolas.
 
 ## Marca y derechos
 - Este proyecto es una **tarea de marketing de la universidad**. Por eso se pueden usar marcas reales (logo y portada de
