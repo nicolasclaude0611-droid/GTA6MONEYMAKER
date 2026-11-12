@@ -274,18 +274,20 @@ js = head_js(sid, 2) + f"""
 scenes.append((sid, dur, scene(sid, dur, body, js)))
 
 # ---------- 5. CANAL (captura tipo YouTube, modo oscuro) ----------
-sid, dur = "s5", 4.6
 YT_CSS = """
-#s5-tag { top:300px; }
-#s5-num { top:330px; height:230px; }
-#s5-num .num-glow, #s5-num .num-fill, #s5-num .num-echo, #s5-num .num-shine { font-size:220px; }
-#s5-num .num-ring { width:230px; height:230px; margin:-115px 0 0 -115px; border-width:7px; }
-#s5-label { top:568px; font-size:62px; }
+#SID-tag { top:300px; }
+#SID-num { top:330px; height:230px; }
+#SID-num .num-glow, #SID-num .num-fill, #SID-num .num-echo, #SID-num .num-shine { font-size:220px; }
+#SID-num .num-ring { width:230px; height:230px; margin:-115px 0 0 -115px; border-width:7px; }
+#SID-label { top:568px; font-size:62px; }
 .yt { position:absolute; left:60px; top:650px; width:960px; height:680px; background:#0f0f0f; border-radius:40px;
   overflow:hidden; font-family:'Roboto',sans-serif; color:#f1f1f1; box-shadow:0 40px 120px rgba(0,0,0,.7);
   border:1px solid rgba(255,255,255,.08); }
 """
-body = head(sid, 5, [("VISIT THE", False), ("CHANNEL", True)]) + f"""
+
+def yt_card(sid, subscribed=False):
+    """Captura del canal (tipo YouTube, modo oscuro). Datos de ejemplo: cambiar por los de Nicolas."""
+    return f"""
   <div id="{sid}-card" class="yt">
     <svg viewBox="0 0 24 24" width="48" height="48" style="position:absolute;left:30px;top:26px;"><path d="M15.4 4.6L14 3.2 5.2 12l8.8 8.8 1.4-1.4L8 12z" fill="#f1f1f1"/></svg>
     <svg viewBox="0 0 24 24" width="46" height="46" style="position:absolute;left:800px;top:27px;"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="#f1f1f1" stroke-width="2"/><path d="M15.5 15.5L21 21" stroke="#f1f1f1" stroke-width="2.2" stroke-linecap="round"/></svg>
@@ -296,43 +298,75 @@ body = head(sid, 5, [("VISIT THE", False), ("CHANNEL", True)]) + f"""
     <div style="position:absolute;left:228px;top:456px;font:500 30px 'Roboto';color:#f1f1f1;">@channelname</div>
     <div id="{sid}-link" style="position:absolute;left:216px;top:494px;padding:6px 12px;border-radius:12px;font:500 28px 'Roboto';color:#f1f1f1;">
       <svg viewBox="0 0 24 24" width="30" height="30" style="vertical-align:-7px;margin-right:6px;"><path id="{sid}-link-i" d="{ICON['link']}" fill="#f1f1f1"/></svg><span id="{sid}-link-t">your-link.com</span></div>
-    <div id="{sid}-btn" style="position:absolute;left:35px;top:572px;width:890px;height:76px;border-radius:38px;background:#f1f1f1;">
-      <div id="{sid}-b1" style="position:absolute;left:0;right:0;top:0;height:76px;display:flex;align-items:center;justify-content:center;font:500 32px 'Roboto';color:#0f0f0f;">Subscribe</div>
-      <div id="{sid}-b2" style="position:absolute;left:0;right:0;top:0;height:76px;display:flex;align-items:center;justify-content:center;font:500 32px 'Roboto';color:#f1f1f1;opacity:0;">
+    <div id="{sid}-btn" style="position:absolute;left:35px;top:572px;width:890px;height:76px;border-radius:38px;background:{'#272727' if subscribed else '#f1f1f1'};">
+      <div id="{sid}-b1" style="position:absolute;left:0;right:0;top:0;height:76px;display:flex;align-items:center;justify-content:center;font:500 32px 'Roboto';color:#0f0f0f;{'opacity:0;' if subscribed else ''}">Subscribe</div>
+      <div id="{sid}-b2" style="position:absolute;left:0;right:0;top:0;height:76px;display:flex;align-items:center;justify-content:center;font:500 32px 'Roboto';color:#f1f1f1;{'' if subscribed else 'opacity:0;'}">
         <svg viewBox="0 0 24 24" width="34" height="34" style="vertical-align:-7px;margin-right:10px;"><path d="{ICON['bell']}" fill="#f1f1f1"/></svg>Subscribed
         <svg viewBox="0 0 24 24" width="30" height="30" style="vertical-align:-7px;margin-left:6px;"><path d="M7 10l5 5 5-5z" fill="#f1f1f1"/></svg></div>
     </div>
-    <div id="{sid}-web" style="position:absolute;left:0;right:0;top:395px;bottom:0;background:#1f1f1f;border-radius:32px 32px 0 0;box-shadow:0 -20px 60px rgba(0,0,0,.6);">
-      <div style="position:absolute;left:430px;top:14px;width:100px;height:8px;border-radius:4px;background:#5a5a5a;"></div>
-      <div style="position:absolute;left:35px;top:44px;width:890px;height:76px;border-radius:38px;background:#2e2e2e;display:flex;align-items:center;padding-left:30px;font:500 32px 'Roboto';color:#f1f1f1;">
-        <svg viewBox="0 0 24 24" width="30" height="30" style="margin-right:14px;"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6z" fill="#aaa"/></svg>your-link.com</div>
-      <div style="position:absolute;left:35px;top:138px;width:890px;height:6px;border-radius:3px;background:#3a3a3a;overflow:hidden;">
-        <div id="{sid}-load" style="width:100%;height:100%;background:#3ea6ff;transform-origin:0 50%;"></div></div>
-      <div style="position:absolute;left:35px;top:180px;width:600px;height:34px;border-radius:10px;background:#2a2a2a;"></div>
-      <div style="position:absolute;left:35px;top:232px;width:820px;height:24px;border-radius:8px;background:#262626;"></div>
-      <div style="position:absolute;left:35px;top:272px;width:700px;height:24px;border-radius:8px;background:#262626;"></div>
-      <div style="position:absolute;left:35px;top:312px;width:760px;height:24px;border-radius:8px;background:#262626;"></div>
-    </div>
-  </div>
+  </div>"""
+
+# Paso 5: visitar el canal y suscribirse
+sid, dur = "s5", 2.4
+body = head(sid, 5, [("VISIT THE", False), ("CHANNEL", True)]) + yt_card(sid) + f"""
   <div id="{sid}-tap" class="tap"></div>"""
 js = head_js(sid, 2) + f"""
-    tl.set("#{sid}-web",{{y:320}},0);
     tl.fromTo("#{sid}-card",{{y:260,scale:.9,opacity:0,filter:"blur(14px)"}},{{y:0,scale:1,opacity:1,filter:"blur(0px)",duration:.65,ease:"expo.out"}},.2);""" + tap_js(sid, 900, 1750, 540, 1258, 1.0, 1.4) + f"""
     tl.to("#{sid}-btn",{{scale:.96,duration:.08}},1.4);
     tl.to("#{sid}-btn",{{scale:1,backgroundColor:"#272727",duration:.25,ease:"power2.out"}},1.48);
     tl.to("#{sid}-b1",{{opacity:0,duration:.08}},1.46);
     tl.to("#{sid}-b2",{{opacity:1,duration:.12}},1.5);
- """ + tap_move_js(sid, 400, 1166, 1.8, 2.15) + f"""
-    tl.to("#{sid}-link",{{backgroundColor:"rgba(255,255,255,.16)",duration:.08}},2.15);
-    tl.to("#{sid}-link-t",{{color:"#3ea6ff",duration:.1}},2.15);
-    tl.to("#{sid}-link-i",{{fill:"#3ea6ff",duration:.1}},2.15);
-    tl.to("#{sid}-link",{{backgroundColor:"rgba(255,255,255,0)",duration:.25}},2.35);
-    tl.to("#{sid}-tap",{{opacity:0,duration:.2}},2.4);
-    tl.to("#{sid}-web",{{y:0,duration:.5,ease:"expo.out"}},2.4);
-    tl.fromTo("#{sid}-load",{{scaleX:0}},{{scaleX:.85,duration:1.4,ease:"power2.out"}},2.6);"""
-scenes.append((sid, dur, scene(sid, dur, body, js, YT_CSS)))
+    tl.to("#{sid}-tap",{{opacity:0,duration:.15}},1.9);
+    {exit_js(sid, "blur", dur-.2)}"""
+scenes.append((sid, dur, scene(sid, dur, body, js, YT_CSS.replace("SID", sid))))
+
+# Paso 6: tocar el link de la bio -> se abre la ventana, carga y aparece la ruleta de Nicolas
+sid, dur = "s6", 4.6
+WIN_CSS = """
+#s6-win { position:absolute; left:60px; top:300px; width:960px; height:1030px; background:#1f1f1f; border-radius:40px; overflow:hidden;
+  box-shadow:0 40px 120px rgba(0,0,0,.75); border:1px solid rgba(255,255,255,.1); z-index:10; }
+#s6-shot { position:absolute; left:0; top:150px; width:960px; height:880px; object-fit:cover; object-position:50% 100%; }
+"""
+body = head(sid, 6, [("CLICK THE", False), ("LINK IN BIO", True)]) + yt_card(sid, subscribed=True) + f"""
+  <div id="{sid}-win">
+    <div style="position:absolute;left:430px;top:14px;width:100px;height:8px;border-radius:4px;background:#5a5a5a;"></div>
+    <div style="position:absolute;left:35px;top:40px;width:890px;height:76px;border-radius:38px;background:#2e2e2e;display:flex;align-items:center;padding-left:30px;font:500 32px 'Roboto';color:#f1f1f1;">
+      <svg viewBox="0 0 24 24" width="30" height="30" style="margin-right:14px;"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6z" fill="#aaa"/></svg>your-link.com</div>
+    <div style="position:absolute;left:35px;top:132px;width:890px;height:6px;border-radius:3px;background:#3a3a3a;overflow:hidden;">
+      <div id="{sid}-load" style="width:100%;height:100%;background:#3ea6ff;transform-origin:0 50%;"></div></div>
+    <div id="{sid}-skel">
+      <div style="position:absolute;left:35px;top:520px;width:600px;height:34px;border-radius:10px;background:#2a2a2a;"></div>
+      <div style="position:absolute;left:35px;top:572px;width:820px;height:24px;border-radius:8px;background:#262626;"></div>
+      <div style="position:absolute;left:35px;top:612px;width:700px;height:24px;border-radius:8px;background:#262626;"></div>
+      <div style="position:absolute;left:35px;top:652px;width:760px;height:24px;border-radius:8px;background:#262626;"></div>
+    </div>
+    <img id="{sid}-shot" src="assets/ruleta.jpg" />
+  </div>
+  <div id="{sid}-tap" class="tap"></div>"""
+js = head_js(sid, 2) + f"""
+    tl.fromTo("#{sid}-card",{{y:200,opacity:0,filter:"blur(12px)"}},{{y:0,opacity:1,filter:"blur(0px)",duration:.5,ease:"expo.out"}},.15);
+    tl.fromTo("#{sid}-link",{{backgroundColor:"rgba(62,166,255,0)"}},{{backgroundColor:"rgba(62,166,255,.28)",duration:.22,yoyo:true,repeat:1}},.55);""" + tap_js(sid, 900, 1750, 400, 1166, .55, 1.05) + f"""
+    tl.to("#{sid}-link",{{backgroundColor:"rgba(255,255,255,.16)",duration:.08}},1.05);
+    tl.to("#{sid}-link-t",{{color:"#3ea6ff",duration:.1}},1.05);
+    tl.to("#{sid}-link-i",{{fill:"#3ea6ff",duration:.1}},1.05);
+    tl.to("#{sid}-tap",{{opacity:0,duration:.2}},1.3);
+    tl.set("#{sid}-shot",{{opacity:0}},0);
+    tl.fromTo("#{sid}-win",{{clipPath:"inset(350px 0px 0px 0px round 40px)",y:420,opacity:0}},{{y:0,opacity:1,duration:.45,ease:"expo.out"}},1.25);
+    tl.fromTo("#{sid}-load",{{scaleX:0}},{{scaleX:1,duration:1.2,ease:"power2.inOut"}},1.4);
+    tl.to(["#{sid}-tag","#{sid}-num","#{sid}-label"],{{opacity:0,y:-60,filter:"blur(10px)",duration:.35,ease:"power3.in"}},2.35);
+    tl.to("#{sid}-win",{{clipPath:"inset(0px 0px 0px 0px round 40px)",duration:.55,ease:"expo.inOut"}},2.4);
+    tl.to("#{sid}-skel",{{opacity:0,duration:.2}},2.6);
+    tl.to("#{sid}-load",{{opacity:0,duration:.2}},2.7);
+    tl.fromTo("#{sid}-shot",{{opacity:0,scale:1.08,filter:"blur(10px)"}},{{opacity:1,scale:1,filter:"blur(0px)",duration:.5,ease:"expo.out"}},2.7);
+    tl.to("#{sid}-shot",{{scale:1.04,duration:1.35,ease:"none"}},3.2);"""
+scenes.append((sid, dur, scene(sid, dur, body, js, YT_CSS.replace("SID", sid) + WIN_CSS)))
 
 os.makedirs(f"{OUT}/compositions", exist_ok=True)
+import shutil
+os.makedirs(f"{OUT}/assets", exist_ok=True)
+_src = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "ruleta.jpg")
+if os.path.abspath(f"{OUT}/assets/ruleta.jpg") != _src:
+    shutil.copyfile(_src, f"{OUT}/assets/ruleta.jpg")  # captura de la ruleta de Nicolas (paso 6)
 for sid, dur, html in scenes:
     open(f"{OUT}/compositions/{sid}.html", "w").write(html)
 
@@ -361,14 +395,17 @@ sfx = [  # (id, archivo, tiempo, volumen, duración)
     ("a-wh3", "whoosh-short", S["s4"] - .2, .6, .57), ("a-pop4", "pop", S["s4"] + .2, .8, .7),
     ("a-tap4", "click", S["s4"] + .75, .9, .37), ("a-tap4b", "click-soft", S["s4"] + 1.5, 1, .37),
     ("a-wh4", "whoosh", S["s5"] - .24, .55, .57), ("a-hit", "impact-bass-1", S["s5"] + .1, .7, 2.1),
-    ("a-tap5", "click", S["s5"] + 1.4, .9, .37), ("a-tap5b", "click-soft", S["s5"] + 2.15, 1, .37), ("a-wh5", "whoosh-short", S["s5"] + 2.4, .5, .57),
+    ("a-tap5", "click", S["s5"] + 1.4, .9, .37),
+    ("a-wh5", "whoosh-short", S["s6"] - .2, .6, .57), ("a-pop6", "pop", S["s6"] + .2, .8, .7),
+    ("a-tap6", "click-soft", S["s6"] + 1.05, 1, .37), ("a-wh6", "whoosh-short", S["s6"] + 1.25, .5, .57),
+    ("a-spark6", "sparkle", S["s6"] + 2.7, .5, 1.6),
 ]
 if INTRO:
     sfx = [tuple(x) for x in INTRO["sfx"]] + sfx
 audio = "\n".join(
     f'      <audio id="{i}" class="clip" src="assets/sfx/{f if '.' in f else f + '.mp3'}" data-start="{t:.2f}" data-duration="{d}" '
     f'data-track-index="{10+n%3}" data-volume="{v}"></audio>' for n, (i, f, t, v, d) in enumerate(sfx))
-seg = "".join(f'<div class="seg"><div id="seg{i}" class="seg-fill"></div></div>' for i in range(5))
+seg = "".join(f'<div class="seg"><div id="seg{i}" class="seg-fill"></div></div>' for i in range(len(starts)))
 seg_js = "\n      ".join(
     f'tl.fromTo("#seg{i}",{{scaleX:{0.6 if st==0 else 0}}},{{scaleX:1,duration:.4,ease:"power3.out"}},{st});' for i, (sid, st, d) in enumerate(starts))
 spark_stars = "".join(
@@ -404,7 +441,7 @@ index = f"""<!doctype html>
       #vignette {{ position:absolute; inset:0; background:radial-gradient(90% 70% at 50% 45%,transparent 55%,rgba(8,3,20,.7)); }}
       .star {{ position:absolute; }}
       #bar {{ position:absolute; z-index:5; left:0; right:0; top:240px; display:flex; justify-content:center; gap:14px; }}
-      .seg {{ width:150px; height:10px; border-radius:5px; background:rgba(255,255,255,.18); overflow:hidden; }}
+      .seg {{ width:130px; height:10px; border-radius:5px; background:rgba(255,255,255,.18); overflow:hidden; }}
       .seg-fill {{ width:100%; height:100%; transform-origin:0 50%; background:linear-gradient(90deg,var(--pink),var(--gold)); }}
       #note {{ position:absolute; left:0; right:0; top:180px; text-align:center; font:500 28px 'Outfit';
           color:rgba(255,255,255,.9); text-shadow:0 2px 0 rgba(10,4,24,.9),0 0 16px rgba(10,4,24,.95); }}
